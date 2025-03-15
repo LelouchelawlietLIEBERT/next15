@@ -17,9 +17,10 @@ const getTopicbyId = async (id: string) => {
 export default async function EditTopic({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>; // Changed to Promise type
 }) {
-  const { id } = await params;
+  const resolvedParams = await params; // Await the params Promise
+  const { id } = resolvedParams;
   const data = await getTopicbyId(id);
   if (!data || !data.topic) {
     return <div>Topic not found or an error occurred.</div>;
